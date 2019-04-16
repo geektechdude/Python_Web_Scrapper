@@ -44,9 +44,10 @@ def find_pictures(URL_INPUT):
     bs = BeautifulSoup(html, 'html.parser')
     for img in bs.find_all('img'):
         list_of_pic_urls.append(img.attrs['src'])
-    return(list_pic_urls)
+    return(list_of_pic_urls)
 
 def links_of_links(URL_INPUT):
+        # prints the links of the links that find_links finds -use carefully!
         lots_of_links = find_links(URL_INPUT)
         print(lots_of_links)
         for item in lots_of_links:
