@@ -59,4 +59,58 @@ def links_of_links(URL_INPUT):
                 except:
                         print('error') 
 
-print(links_of_links("https://www.geektechstuff.com"))
+def wiki_login():
+        # import selenium webdriver
+        from selenium import webdriver
+        import time
+        # set browser / browser options
+        browser = webdriver.safari.webdriver.WebDriver(quiet=False)
+        # get page
+        browser.get("https://en.wikipedia.org/w/index.php?title=Special:UserLogin&returnto=Main+Page")
+        # web page IDs that handle log in
+        username = browser.find_element_by_id('wpName1')
+        password = browser.find_element_by_id('wpPassword1')
+        login = browser.find_element_by_id('wpLoginAttempt')
+        # send details to log in IDs
+        username.send_keys("USERNAME_HERE")
+        password.send_keys("PASSWORD_HERE")
+        login.click()
+        time.sleep(5)
+        
+        
+def wordpress_login():
+        # import selenium webdriver
+        from selenium import webdriver
+        import time
+         # logon details
+        username_wp = "USERNAME_HERE"
+        password_wp = "PASSWORD_HERE"
+        # set browser / browser options
+        browser = webdriver.safari.webdriver.WebDriver(quiet=False)
+        # if using Chrome it needs a path!
+        #browser = webdriver.Chrome()
+        # get page
+        browser.get("https://wordpress.com/log-in")
+        # delay to give page chance to load
+        time.sleep(5)
+        # Fields by ID for username page
+        username_field = browser.find_element_by_id('usernameOrEmail')
+        username_field.send_keys(username_wp)
+        # element by XPath
+        login_button = browser.find_element_by_xpath("//button[text()='Continue']")
+        login_button.click()
+        time.sleep(5)
+        password_field = browser.find_element_by_id("password")
+        password_field.send_keys(password_wp)
+        login_button.click()
+        time.sleep(5)
+        wp_hub = browser.find_element_by_xpath("//*[@id='header']/a[1]")
+        wp_hub.click()
+        time.sleep(5)
+        # looking for visitors stats
+        # element by CSS selector
+        stat = browser.find_element_by_css_selector("#my-stats-content > div.card.stats-module.is-chart-tabs > ul > li:nth-child(2) > a > span.value")
+        stat_value = stat.text
+        time.sleep(5)
+        print("Total number of visitors so far today =", stat_value)
+        browser.quit()
